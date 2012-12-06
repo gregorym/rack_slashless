@@ -24,8 +24,5 @@ config.middleware.insert_before(0, "Rack::Slashless")
 Author
 ======
 
-Gregory Marcilhacy
+Gregory Marcilhacy<br/>
 License: MIT
-=======
-rack_slashless
-==============
