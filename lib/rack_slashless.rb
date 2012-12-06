@@ -10,7 +10,9 @@ module Rack
         parts = env['SERVER_NAME'].split('.')
         suffix, chunk, prefix = parts.pop, parts.pop, parts.pop
 
-        destination  = "#{env['rack.url_scheme']}://#{prefix}.#{chunk}.#{suffix}"
+        destination = "#{env['rack.url_scheme']}://"
+        destination << "#{prefix}." if prefix
+        destination << "#{chunk}.#{suffix}"
         destination << "#{env['PATH_INFO']}"[0..-2]
         
         [301, {'Location' => destination}, ['Redirecting to the same url but with the ending /']]
