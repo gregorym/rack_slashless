@@ -9,19 +9,17 @@ describe Rack::Slashless do
   end
 
   describe "/" do
-    it "should redirect to server name" do
+    it "should success to server name" do
       get '/', {}, {'SERVER_NAME' => 'www.example.org'}
       
-      last_response.status.should == 301
-      last_response['Location'].should eql('http://www.example.org')
+      last_response.status.should == 200
     end
 
     context "without a subdomain" do
       it "should redirect to server name" do
         get '/', {}, {'SERVER_NAME' => 'example.org'}
       
-        last_response.status.should == 301
-        last_response['Location'].should eql('http://example.org')
+        last_response.status.should == 200
       end
     end
 

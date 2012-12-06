@@ -6,7 +6,7 @@ module Rack
     end
 
     def call(env)
-      if env['REQUEST_METHOD'] == "GET" && env['QUERY_STRING'].empty? && env['PATH_INFO'].end_with?("/")
+      if env['REQUEST_METHOD'] == "GET" && env['QUERY_STRING'].empty? && env['PATH_INFO'].match(/\w+\/$/)
         parts = env['SERVER_NAME'].split('.')
         suffix, chunk, prefix = parts.pop, parts.pop, parts.pop
 

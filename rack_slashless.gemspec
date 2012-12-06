@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.name          = "rack_slashless"
   gem.require_paths = ["lib"]
   gem.version       = "0.0.3"
+  gem.license       = "MIT"
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'rake-test'
