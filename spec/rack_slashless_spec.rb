@@ -9,7 +9,7 @@ describe Rack::Slashless do
   end
 
   describe "/" do
-    it "should success to server name" do
+    it "should not redirect" do
       get '/', {}, {'SERVER_NAME' => 'www.example.org'}
       
       last_response.status.should == 200
@@ -22,7 +22,6 @@ describe Rack::Slashless do
         last_response.status.should == 200
       end
     end
-
   end
 
   describe "/blog/" do
@@ -32,14 +31,16 @@ describe Rack::Slashless do
       last_response.status.should == 301
       last_response['Location'].should eql('http://www.example.org/blog')
     end
-  end
 
-  describe "/blog?article=1" do
-    it "should not redirect" do
-      get '/blog?article=1', {}, {'SERVER_NAME' => 'www.example.org'}
+    context "with a query_string" do
+      it "should redirect" do
+        get '/blog/?article=1', {}, {'SERVER_NAME' => 'example.org'}
 
-      last_response.status.should == 200
+        last_response.status.should == 301
+        last_response['Location'].should eql('http://example.org/blog?article=1')
+      end
     end
+
   end
 
   describe "POST /blog" do
