@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rack_slashless (0.0.5)
+    rack_slashless (0.0.6)
 
 GEM
   remote: http://rubygems.org/
