@@ -12,22 +12,22 @@ describe Rack::Slashless do
 
     context 'without a path' do
       it 'should not redirect' do
-        get '/', {}, 'SERVER_NAME' => 'www.example.org'
+        get '/', {}, 'HTTP_HOST' => 'example.org'
         last_response.status.should == 200
       end
     end
 
     context 'with a path that includes a trailing slash' do
       it 'should redirect to a url without a trailing slash' do
-        get '/blog/', {}, 'SERVER_NAME' => 'www.example.org'
+        get '/blog/', {}, 'HTTP_HOST' => 'example.org'
         last_response.status.should == 301
-        last_response['Location'].should eql('http://www.example.org/blog')
+        last_response['Location'].should eql('http://example.org/blog')
       end
     end
 
     context 'with a query string' do
       it 'should retain the query string when redirecting' do
-        get '/blog/?article=1', {}, 'SERVER_NAME' => 'example.org'
+        get '/blog/?article=1', {}, 'HTTP_HOST' => 'example.org'
         last_response.status.should == 301
         last_response['Location'].should eql('http://example.org/blog?article=1')
       end
@@ -37,7 +37,7 @@ describe Rack::Slashless do
 
   context 'POST requests' do
     it 'should not redirect' do
-      post '/blog/', {}, 'SERVER_NAME' => 'www.example.org'
+      post '/blog/', {}, 'HTTP_HOST' => 'example.org'
       last_response.status.should == 200
     end
   end
