@@ -12,4 +12,5 @@ Gem::Specification.new do |gem|
   gem.license       = "MIT"
 
   gem.add_development_dependency 'rspec', '>= 2'
+  gem.add_development_dependency 'rack-test'
 end
