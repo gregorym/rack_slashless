@@ -17,13 +17,6 @@ describe Rack::Slashless do
       end
     end
 
-    context 'without a subdomain' do
-      it 'should redirect to server name' do
-        get '/', {}, 'SERVER_NAME' => 'example.org'
-        last_response.status.should == 200
-      end
-    end
-
     context 'with a path that includes a trailing slash' do
       it 'should redirect to a url without a trailing slash' do
         get '/blog/', {}, 'SERVER_NAME' => 'www.example.org'
