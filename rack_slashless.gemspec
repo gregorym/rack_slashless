@@ -11,6 +11,5 @@ Gem::Specification.new do |gem|
   gem.version       = "0.0.5"
   gem.license       = "MIT"
 
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'rake-test'
+  gem.add_development_dependency 'rspec', '>= 2'
 end
