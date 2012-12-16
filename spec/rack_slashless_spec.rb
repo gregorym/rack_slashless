@@ -8,34 +8,26 @@ describe Rack::Slashless do
     end
   end
 
-  describe "/" do
-    it "should not redirect" do
-      get '/', {}, {'SERVER_NAME' => 'www.example.org'}
-      
-      last_response.status.should == 200
-    end
+  context 'GET requests' do
 
-    context "without a subdomain" do
-      it "should redirect to server name" do
-        get '/', {}, {'SERVER_NAME' => 'example.org'}
-      
+    context 'without a path' do
+      it 'should not redirect' do
+        get '/', {}, 'SERVER_NAME' => 'www.example.org'
         last_response.status.should == 200
       end
     end
-  end
 
-  describe "/blog/" do
-    it "should redirect to /blog" do
-      get '/blog/', {}, {'SERVER_NAME' => 'www.example.org'}
-
-      last_response.status.should == 301
-      last_response['Location'].should eql('http://www.example.org/blog')
+    context 'with a path that includes a trailing slash' do
+      it 'should redirect to a url without a trailing slash' do
+        get '/blog/', {}, 'SERVER_NAME' => 'www.example.org'
+        last_response.status.should == 301
+        last_response['Location'].should eql('http://www.example.org/blog')
+      end
     end
 
-    context "with a query_string" do
-      it "should redirect" do
-        get '/blog/?article=1', {}, {'SERVER_NAME' => 'example.org'}
-
+    context 'with a query string' do
+      it 'should retain the query string when redirecting' do
+        get '/blog/?article=1', {}, 'SERVER_NAME' => 'example.org'
         last_response.status.should == 301
         last_response['Location'].should eql('http://example.org/blog?article=1')
       end
@@ -43,10 +35,9 @@ describe Rack::Slashless do
 
   end
 
-  describe "POST /blog" do
-    it "should not redirect" do
-      post '/blog/', {}, {'SERVER_NAME' => 'www.example.org'}
-
+  context 'POST requests' do
+    it 'should not redirect' do
+      post '/blog/', {}, 'SERVER_NAME' => 'www.example.org'
       last_response.status.should == 200
     end
   end
