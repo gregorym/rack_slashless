@@ -7,13 +7,8 @@ module Rack
 
     def call(env)
       request = Rack::Request.new(env)
-      if request.get? && request.path_info.match(/\w+\/$/)
-        destination = [
-          "#{request.scheme}://",
-          request.env['SERVER_NAME'],
-          request.path_info[0..-2],
-          (request.query_string.empty? ? '' : "?#{request.query_string}")
-        ].join
+      if request.get? && request.path_info.match(/.+\/$/)
+        destination = request.url.gsub(/\/(\?.*)?$/,'\1')
         [301, {'Location' => destination}, ["Redirecting to #{destination}"]]
       else
         @app.call(env)
