@@ -30,6 +30,12 @@ describe Rack::Slashless do
         last_response.status.should == 301
         last_response['Location'].should eql('http://example.org/blog')
       end
+
+      it 'should redirect and provide a Content-Type' do
+        get '/blog/', {}, 'HTTP_HOST' => 'example.org'
+        last_response.status.should == 301
+        last_response['Content-Type'].should eql('text/html')
+      end
     end
 
     context 'with a query string' do
