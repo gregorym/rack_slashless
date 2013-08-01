@@ -9,7 +9,7 @@ module Rack
       request = Rack::Request.new(env)
       if request.get? && request.path_info.match(/.+\/$/)
         destination = request.url.gsub(/\/(\?.*)?$/,'\1')
-        [301, {'Location' => destination}, ["Redirecting to #{destination}"]]
+        [301, {'Location' => destination, 'Content-Type' => 'text/html'}, ["Redirecting to #{destination}"]]
       else
         @app.call(env)
       end
