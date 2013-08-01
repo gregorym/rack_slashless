@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- spec/*`.split("\n")
   gem.name          = "rack_slashless"
   gem.require_paths = ["lib"]
-  gem.version       = "0.0.7"
+  gem.version       = "0.0.8"
   gem.license       = "MIT"
 
   gem.add_development_dependency 'rspec', '>= 2'
